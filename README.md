@@ -54,4 +54,4 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 Contributions are welcome! Please open an issue or submit a pull request for improvements or bug fixes.
 ## Contact
 
-For any questions or issues, please contact `iustin@notiustin.com](mailto:iustin@notiustin.com)`
+For any questions or issues, please contact [iustin@notiustin.com](mailto:iustin@notiustin.com)
