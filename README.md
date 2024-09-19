@@ -1,4 +1,5 @@
-<span style="color: red;">Work in Progress</span>
+> [!CAUTION]
+> Work in progress
 
 # TimeGuard
 
