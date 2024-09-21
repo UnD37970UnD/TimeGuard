@@ -3,16 +3,26 @@ import sqlite3
 def setup_db():
     conn = sqlite3.connect('timeguard.db')
     cursor = conn.cursor()
+
     # Create a table for settings
     cursor.execute('''CREATE TABLE IF NOT EXISTS settings (
                       id INTEGER PRIMARY KEY,
                       key TEXT UNIQUE,
                       value TEXT)''')
-    # Create a table for users
+
+    # Create a table for users (with time_limit column)
     cursor.execute('''CREATE TABLE IF NOT EXISTS users (
                       id INTEGER PRIMARY KEY,
                       username TEXT UNIQUE,
-                      enabled BOOLEAN)''')
+                      enabled BOOLEAN,
+                      time_limit INTEGER DEFAULT 0)''')  # Default time limit is 0
+
+    # Add time_limit column to existing users table if it doesn't exist
+    cursor.execute("PRAGMA table_info(users)")
+    columns = [column[1] for column in cursor.fetchall()]
+    if 'time_limit' not in columns:
+        cursor.execute("ALTER TABLE users ADD COLUMN time_limit INTEGER DEFAULT 0")
+
     conn.commit()
     conn.close()
 

@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 import sqlite3
 
+from user_frame import UserFrame
+
 class ConfigScreen(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -25,7 +27,7 @@ class ConfigScreen(tk.Frame):
 
         if entered_password == confirm_password and entered_password != "":
             self.save_password(entered_password)
-            self.controller.show_frame("UserFrame")  # Show UserFrame after setting password
+            self.controller.show_frame(UserFrame)  # Show UserFrame after setting password
         else:
             messagebox.showerror("Error", "Passwords do not match or are empty")
 
