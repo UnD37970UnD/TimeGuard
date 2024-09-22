@@ -12,10 +12,12 @@ def setup_db():
 
     # Create a table for users (with time_limit column)
     cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-                      id INTEGER PRIMARY KEY,
-                      username TEXT UNIQUE,
-                      enabled BOOLEAN,
-                      time_limit INTEGER DEFAULT 0)''')  # Default time limit is 0
+                    id INTEGER PRIMARY KEY,
+                    username TEXT UNIQUE,
+                    enabled BOOLEAN,
+                    time_limit INTEGER DEFAULT 0,
+                    logout_time INTEGER DEFAULT 0)''')  # Default time limit is 0
+
 
     # Add time_limit column to existing users table if it doesn't exist
     cursor.execute("PRAGMA table_info(users)")
@@ -41,3 +43,20 @@ def get_admin_password():
     result = cursor.fetchone()
     conn.close()
     return result[0] if result else ""
+
+def get_user(username):
+    conn = sqlite3.connect('timeguard.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+    result = cursor.fetchone()
+    conn.close()
+    return result
+
+def save_time(current_time, username):
+
+    conn = sqlite3.connect('timeguard.db')
+    cursor = conn.cursor()
+    # Insert current time
+    cursor.execute("UPDATE users SET logout_time=? WHERE username=?", (current_time, username))
+    conn.commit()
+    conn.close()

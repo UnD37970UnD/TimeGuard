@@ -68,7 +68,7 @@ class AdminPanel(tk.Frame):
         # Fetch enabled users from the database
         conn = sqlite3.connect('timeguard.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT username, time_limit FROM users WHERE enabled=1")
+        cursor.execute("SELECT username, time_limit FROM users")
         users = cursor.fetchall()
         conn.close()
 
